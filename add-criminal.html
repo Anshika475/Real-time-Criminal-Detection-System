@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Criminal Record | CrimeSanket</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .form-container {
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+      border: 1px solid #333;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      color: rgb(255, 255, 255);
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background-color: #1a1a1a;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: maroon;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #7e7e7e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Add Criminal Record</h2>
+    <form>
+      <label for="criminal-id">Criminal ID</label>
+      <input type="text" id="criminal-id" name="criminal-id" placeholder="Enter criminal ID" required>
+
+      <label for="full-name">Full Name</label>
+      <input type="text" id="full-name" name="full-name" placeholder="Enter full name" required>
+
+      <label for="nickname">Nickname</label>
+      <input type="text" id="nickname" name="nickname" placeholder="Enter nickname">
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob">
+
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender">
+        <option value="">-- Select Gender --</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="nationality">Nationality</label>
+      <input type="text" id="nationality" name="nationality" placeholder="Enter nationality">
+
+      <label for="address">Address</label>
+      <textarea id="address" name="address" placeholder="Enter address"></textarea>
+
+      <label for="criminal-activities">Criminal Activities</label>
+      <textarea id="criminal-activities" name="criminal-activities" placeholder="Enter criminal activities"></textarea>
+
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="">-- Select Status --</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+
+      <label for="upload-picture">Upload Picture</label>
+      <input type="file" id="upload-picture" name="upload-picture">
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+</body>
+</html>

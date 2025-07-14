@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Police Officer Signup | CrimeSanket</title>
+  <style>
+    @font-face {
+      font-family: 'BernierDistressed';
+      src: url('fonts/Bernier-Distressed.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .fog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.03), transparent 70%),
+                  radial-gradient(circle at 70% 70%, rgba(255,255,255,0.03), transparent 70%);
+      animation: fogMove 60s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes fogMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-25%, -25%); }
+    }
+
+    .signup-container {
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 360px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.05);
+      border: 1px solid #333;
+      animation: fadeIn 1s ease-out;
+    }
+
+    h2 {
+      font-family: 'BernierDistressed', serif;
+      text-align: center;
+      font-size: 2rem;
+      color: maroon;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      margin: 0.5rem 0;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #1a1a1a;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 1rem;
+      background-color: maroon;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #660000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fog"></div>
+
+  <div class="signup-container">
+    <h2>Police Signup</h2>
+
+<form action="/signup" method="POST">
+  <input type="text" name="officer_id" placeholder="Officer ID" required />
+  <input type="text" name="name" placeholder="Full Name" required />
+  <input type="password" name="password" placeholder="Password" required />
+  <select name="rank" required>
+    <option value="">Select Rank</option>
+    <option value="Inspector">Inspector</option>
+    <option value="SI">Sub-Inspector</option>
+    <option value="Constable">Constable</option>
+  </select>
+  <button type="submit">Sign Up</button>
+</form>
+
+  </div>
+
+</body>
+</html>

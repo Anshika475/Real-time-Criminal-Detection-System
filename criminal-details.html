@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Criminal Details | CrimeSanket</title>
+  <input type="text" name="criminal_id" />
+<input type="text" name="name" />
+<input type="text" name="city" /> <!-- If city is used -->
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <style>
+    @font-face {
+      font-family: 'BernierDistressed';
+      src: url('fonts/Bernier-Distressed.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .header {
+      padding: 2rem;
+      text-align: center;
+      font-family: 'BernierDistressed', serif;
+      font-size: 2.5rem;
+      color: maroon;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .details-card {
+      background-color: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 1.5rem;
+      width: 350px;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
+    }
+
+    .details-card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .details-card h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: maroon;
+    }
+
+    .details-card p {
+      margin: 0.5rem 0;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    .map-section {
+      flex: 1;
+      min-width: 350px;
+      max-width: 700px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .toggle-mode {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .toggle-mode select {
+      background-color: #1a1a1a;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 0.3rem 0.5rem;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .map-section {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">Criminal Profile</div>
+
+  <div class="container">
+    <div class="details-card">
+      <img src="images/criminal-placeholder.jpg" alt="Criminal Photo" />
+      <h2>Ravi Sharma</h2>
+      <p><strong>ID:</strong> CR-10293</p>
+      <p><strong>Crimes:</strong> Theft, Assault, Drug Trafficking</p>
+      <p><strong>Status:</strong> Under Surveillance</p>
+      <p><strong>Last Seen:</strong> 12th June 2025, 6:45 PM</p>
+      <p><strong>Location:</strong> Master Canteen, Bhubaneswar</p>
+    </div>
+
+    <div class="map-section">
+      <div class="toggle-mode">
+        <label for="mapStyle">Map Style:</label>
+        <select id="mapStyle">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+fetch("/criminals")
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(c => {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <h3>${c.name}</h3>
+        <img src="data:image/jpeg;base64,${c.photo}" width="150" />
+      `;
+      document.body.appendChild(div);
+    });
+  });
+fetch("/criminals").then(res => res.json()).then(data => {
+  data.forEach(c => {
+    // show criminal name and photo
+  });
+});
+    const lastKnownLat = 20.2700;
+    const lastKnownLng = 85.8400;
+
+    const map = L.map('map').setView([lastKnownLat, lastKnownLng], 15);
+
+    const lightTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    });
+
+    const darkTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; CartoDB'
+    });
+
+    // Default to light mode
+    lightTiles.addTo(map);
+
+    const marker = L.marker([lastKnownLat, lastKnownLng])
+      .addTo(map)
+      .bindPopup('Last seen: Master Canteen, Bhubaneswar<br>12th June 2025, 6:45 PM')
+      .openPopup();
+
+    document.getElementById('mapStyle').addEventListener('change', function () {
+      if (this.value === 'dark') {
+        map.removeLayer(lightTiles);
+        darkTiles.addTo(map);
+      } else {
+        map.removeLayer(darkTiles);
+        lightTiles.addTo(map);
+      }
+    });
+  const urlParams = new URLSearchParams(window.location.search);
+  const criminalId = urlParams.get("id"); // e.g., ?id=CR-10293
+
+  fetch(`http://localhost:3000/criminals/${criminalId}`)
+    .then(res => res.json())
+    .then(data => {
+      document.querySelector("h2").textContent = data.name;
+      document.querySelector("img").src = data.photo_url;
+      document.querySelectorAll("p")[0].innerHTML = `<strong>ID:</strong> ${data.id}`;
+      document.querySelectorAll("p")[1].innerHTML = `<strong>Crimes:</strong> ${data.crimes}`;
+      document.querySelectorAll("p")[2].innerHTML = `<strong>Status:</strong> ${data.status}`;
+      document.querySelectorAll("p")[3].innerHTML = `<strong>Last Seen:</strong> ${data.last_seen}`;
+      document.querySelectorAll("p")[4].innerHTML = `<strong>Location:</strong> ${data.location}`;
+
+      const lat = parseFloat(data.latitude);
+      const lng = parseFloat(data.longitude);
+      map.setView([lat, lng], 15);
+      L.marker([lat, lng]).addTo(map).bindPopup(`Last seen: ${data.location}`).openPopup();
+    })
+    .catch(err => {
+      alert("❌ Criminal not found or server error.");
+      console.error(err);
+    });
+  </script>
+
+</body>
+</html>

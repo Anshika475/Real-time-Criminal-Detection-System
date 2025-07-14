@@ -1,0 +1,15 @@
+<script>
+fetch("http://localhost:5000/criminals")
+  .then(res => res.json())
+  .then(data => {
+    data.forEach(c => {
+      const card = document.createElement("div");
+      card.innerHTML = `
+        <h3>${c.name}</h3>
+        ${c.photo ? `<img src="data:image/jpeg;base64,${c.photo}" width="150" />` : "<p>No photo available</p>"}
+        <hr/>
+      `;
+      document.body.appendChild(card);
+    });
+  });
+</script>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Criminal | CrimeSanket</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .modal {
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+      border: 1px solid #333;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: maroon;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    #cityDisplay {
+      font-size: 1rem;
+      color: #ccc;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 5px;
+      border: 1px solid #444;
+      background-color: #1a1a1a;
+      color: #fff;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: maroon;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #660000;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="modal">
+    <h2>Search Criminal</h2>
+    <div id="cityDisplay">City: <span id="cityName">Loading...</span></div>
+
+    <label for="criminalId">Criminal ID</label>
+    <input type="text" id="criminalId" placeholder="e.g. CR-10293" />
+
+    <label for="criminalName">Criminal Name</label>
+    <input type="text" id="criminalName" placeholder="e.g. Ravi Sharma" />
+
+    <button onclick="searchCriminal()">Search</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const selectedCity = params.get('city');
+    document.getElementById('cityName').textContent = selectedCity || 'Not specified';
+
+    function searchCriminal() {
+      const id = document.getElementById('criminalId').value.trim();
+      const name = document.getElementById('criminalName').value.trim();
+
+      if (!id && !name) {
+        alert("Please enter at least Criminal ID or Name.");
+        return;
+      }
+
+      alert(`Searching in ${selectedCity}:\nID: ${id || 'N/A'}\nName: ${name || 'N/A'}`);
+      // You can redirect to a results page or fetch data here
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+opencv-python
+deepface
+face_recognition
+geocoder
+python-dotenv
+mysql-connector-python
+
+
